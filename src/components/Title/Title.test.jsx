@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import { Title } from './Title';
 
-describe('Title component', () => {
+describe('Title', () => {
   const text = 'i am children';
 
   it('должен рендерить заголовок с элементом children внутри', () => {
