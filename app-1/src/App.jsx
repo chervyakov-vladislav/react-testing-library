@@ -3,6 +3,7 @@ import { Form } from './components/Form/Form';
 import { Input } from './components/Input';
 import { Title } from './components/Title/Title';
 import { Text } from './components/Text';
+import { ToggleTheme } from './components/ToggleTheme';
 import { useCreateUser } from './hooks/use-create-user';
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
 
   return (
     <main data-testid="app">
+      <ToggleTheme />
       <Title>Create user</Title>
       <Form onSubmit={onSubmit} onSuccess={onSuccess} onError={onError}>
         <Input label="User name" name="name" />

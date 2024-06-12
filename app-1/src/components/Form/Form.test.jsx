@@ -1,24 +1,26 @@
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import { Form } from './Form';
+import { renderWithProviders } from '../../utils/renderWithProviders';
 
 describe('Form', () => {
   it('должна отприсовываться форма с children', () => {
-    const { container, getByTestId } = render(
+    renderWithProviders(
       <Form>
         <div data-testid="inner-div"></div>
       </Form>
     );
 
-    expect(getByTestId('inner-div')).toBeInTheDocument();
-    expect(container.querySelector('form')).toBeInTheDocument();
+    expect(screen.getByTestId('inner-div')).toBeInTheDocument();
+    expect(screen.getByRole('form')).toBeInTheDocument();
   });
 
   it('onSubmit вызывается', () => {
     const onSubmit = jest.fn();
 
-    const { container } = render(<Form onSubmit={onSubmit}/>)
-    const myForm = container.querySelector('form');
+    renderWithProviders(<Form onSubmit={onSubmit} />);
+
+    const myForm = screen.getByRole('form');
 
     fireEvent.submit(myForm);
 
@@ -28,8 +30,9 @@ describe('Form', () => {
   it('должна вызываться функция onSuccess', async () => {
     const onSuccess = jest.fn();
 
-    const { container } = render(<Form onSuccess={onSuccess} onSubmit={jest.fn()}/>);
-    const myForm = container.querySelector('form');
+    renderWithProviders(<Form onSubmit={jest.fn()} onSuccess={onSuccess} />);
+
+    const myForm = screen.getByRole('form');
 
     fireEvent.submit(myForm);
 
@@ -41,8 +44,11 @@ describe('Form', () => {
   it('должна вызываться функция onError', async () => {
     const onError = jest.fn();
 
-    const { container } = render(<Form onError={onError} onSubmit={() => Promise.reject()}/>);
-    const myForm = container.querySelector('form');
+    renderWithProviders(
+      <Form onSubmit={() => Promise.reject()} onError={onError} />,
+    );
+
+    const myForm = screen.getByRole('form');
 
     fireEvent.submit(myForm);
 
