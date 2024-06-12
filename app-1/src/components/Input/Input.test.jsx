@@ -3,30 +3,28 @@ import userEvent from '@testing-library/user-event';
 
 import { Input } from './Input';
 
-const testPlaceholder = 'test placeholder'
+
+const testPlaceholder = 'test placeholder';
+
+function renderComponent(props) {
+  return render(<Input placeholder={testPlaceholder} {...props} />)
+}
 
 describe('Input', () => {
   it('должен отрисовать input', () => {
-    render(<Input placeholder={testPlaceholder}/>);
+    renderComponent();
 
     expect(screen.getByPlaceholderText(testPlaceholder)).toBeInTheDocument();
   });
 
   it('должен отрисовать input с корректным типом элемента', () => {
-    render(<Input placeholder={testPlaceholder} type='checkbox'/>);
+    renderComponent({type: 'checkbox'});
 
     expect(screen.getByRole('checkbox')).toBeInTheDocument();
   });
 
   it('Корректно отображаются классы у элемента', () => {
-    const { container} = render(
-      <Input
-        placeholder={testPlaceholder}
-        inputClassName='inputTest'
-        containerClassName='containerTest'
-      />
-    );
-
+    const { container } = renderComponent({ inputClassName: 'inputTest', containerClassName: 'containerTest' });
     const containerEl = container.querySelector('.formControl.containerTest');
     const element = screen.getByPlaceholderText(testPlaceholder);
 
@@ -35,15 +33,14 @@ describe('Input', () => {
   });
 
   it('у интпута при рендере отсутствует label', () => {
-    render(<Input placeholder={testPlaceholder}/>);
+    renderComponent();
 
     expect(screen.queryByTestId('input-label')).not.toBeInTheDocument();
   });
 
   it('у интпута при рендере присутствует label', () => {
     const labelText = 'i am label';
-
-    render(<Input placeholder={testPlaceholder} label={labelText}/>);
+    renderComponent({ label: labelText });
 
     expect(screen.getByLabelText(labelText)).toBeInTheDocument();
   });
