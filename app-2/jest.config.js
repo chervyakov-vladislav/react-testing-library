@@ -2,7 +2,7 @@
 const config = {
   verbose: true,
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.{js,jsx}', '!src/index.jsx'],
+  collectCoverageFrom: ['src/**/*.{js,jsx}', '!src/index.jsx', '!src/api.js'],
   coverageDirectory: 'coverage',
   coverageReporters: ["json", "html", "clover", "lcov", "text"],
   testEnvironment: 'jsdom',

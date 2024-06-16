@@ -25,6 +25,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'react/prop-types': 'off',
-    'jest/no-focused-tests': 'off',
+    'jest/no-focused-tests': 'off', // нужно для dev разработки. Вообще правило существует, что бы на ci блочился pipeline, если ты случайно забыли убрать only или fit
   },
 };
